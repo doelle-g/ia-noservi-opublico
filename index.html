@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A Importância do Uso Correto da Inteligência Artificial na Gestão Pública - Guilherme Doelle, Especialista em Comunicação Institucional">
+<meta name="author" content="Guilherme Doelle">
+<title>IA na Gestão Pública | Guilherme Doelle</title>
+<!-- Myriad Pro via Adobe Fonts fallback stack -->
+<style>
+:root {
+  --blue: #1877F2;
+  --blue-dark: #0d5fc0;
+  --blue-deep: #0a3d7a;
+  --blue-light: #4a9af5;
+  --blue-glow: rgba(24, 119, 242, 0.25);
+  --white: #ffffff;
+  --gray-50: #f8faff;
+  --gray-100: #eef2f9;
+  --gray-200: #d4dff0;
+  --gray-400: #8fa5c8;
+  --gray-600: #5a6f8a;
+  --gray-800: #1e2d42;
+  --gray-900: #0d1825;
+  --font-display: 'Myriad Pro', 'Myriad', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Myriad Pro', 'Myriad', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --radius: 16px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 24px rgba(24,119,242,0.10);
+  --shadow-lg: 0 12px 48px rgba(24,119,242,0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--gray-900);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── PROGRESS BAR ─── */
+#progress-bar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--blue-light));
+  width: 0%; z-index: 9999; transition: width 0.1s linear;
+  box-shadow: 0 0 10px var(--blue-glow);
+}
+
+/* ─── SIDEBAR ─── */
+#sidebar {
+  position: fixed; left: 0; top: 0; height: 100vh;
+  width: 260px; background: rgba(13,24,37,0.97);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(24,119,242,0.15);
+  z-index: 1000; display: flex; flex-direction: column;
+  padding: 0; overflow: hidden;
+  transition: transform 0.35s cubic-bezier(.77,0,.18,1);
+}
+
+#sidebar-logo {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(24,119,242,0.1);
+}
+#sidebar-logo .logo-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 16px var(--blue-glow);
+}
+#sidebar-logo .logo-icon svg { width: 20px; height: 20px; fill: white; }
+#sidebar-logo .logo-title {
+  font-family: var(--font-display); font-size: 0.72rem;
+  font-weight: 700; color: var(--blue-light); letter-spacing: 0.12em;
+  text-transform: uppercase; line-height: 1.3;
+}
+#sidebar-logo .logo-sub {
+  font-size: 0.65rem; color: var(--gray-400); margin-top: 2px;
+}
+
+#sidebar-nav {
+  flex: 1; overflow-y: auto; padding: 12px 0;
+  scrollbar-width: thin; scrollbar-color: rgba(24,119,242,0.2) transparent;
+}
+#sidebar-nav::-webkit-scrollbar { width: 3px; }
+#sidebar-nav::-webkit-scrollbar-thumb { background: rgba(24,119,242,0.2); border-radius: 2px; }
+
+.nav-section-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gray-600);
+  padding: 12px 24px 4px;
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 20px 9px 24px;
+  font-size: 0.8rem; font-weight: 400; color: var(--gray-400);
+  cursor: pointer; transition: all 0.2s; border-left: 2px solid transparent;
+  font-family: var(--font-body);
+  user-select: none;
+}
+.nav-item .nav-num {
+  font-size: 0.6rem; color: var(--gray-600); font-weight: 700;
+  min-width: 18px; font-family: var(--font-display);
+}
+.nav-item:hover { color: var(--white); background: rgba(24,119,242,0.08); }
+.nav-item.active {
+  color: var(--white); border-left-color: var(--blue);
+  background: rgba(24,119,242,0.12); font-weight: 500;
+}
+.nav-item.active .nav-num { color: var(--blue-light); }
+
+#sidebar-footer {
+  padding: 16px 24px; border-top: 1px solid rgba(24,119,242,0.1);
+  font-size: 0.68rem; color: var(--gray-600);
+}
+#sidebar-footer strong { color: var(--gray-400); display: block; margin-bottom: 2px; }
+
+/* ─── HAMBURGER ─── */
+#menu-toggle {
+  display: none; position: fixed; top: 14px; left: 14px;
+  z-index: 1100; background: rgba(13,24,37,0.9);
+  border: 1px solid rgba(24,119,242,0.25);
+  border-radius: 10px; width: 42px; height: 42px;
+  align-items: center; justify-content: center;
+  cursor: pointer; backdrop-filter: blur(10px);
+  flex-direction: column; gap: 5px;
+}
+#menu-toggle span {
+  width: 18px; height: 2px;
+  background: var(--blue-light); border-radius: 2px;
+  transition: all 0.3s;
+}
+#overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 999;
+}
+
+/* ─── MAIN CONTENT ─── */
+#main {
+  margin-left: 260px;
+  min-height: 100vh;
+}
+
+/* ─── SEARCH BAR ─── */
+#search-bar {
+  position: fixed; top: 0; right: 0;
+  left: 260px; z-index: 900;
+  padding: 12px 40px;
+  background: rgba(13,24,37,0.9); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(24,119,242,0.1);
+  display: flex; align-items: center; gap: 12px;
+  transition: left 0.35s;
+}
+#search-input {
+  flex: 1; max-width: 320px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(24,119,242,0.2);
+  border-radius: 8px; padding: 8px 14px;
+  color: var(--white); font-family: var(--font-body); font-size: 0.82rem;
+  outline: none; transition: border-color 0.2s;
+}
+#search-input::placeholder { color: var(--gray-600); }
+#search-input:focus { border-color: var(--blue); }
+#search-results {
+  position: absolute; top: calc(100% + 4px); left: 40px;
+  background: var(--gray-800); border: 1px solid rgba(24,119,242,0.2);
+  border-radius: 10px; min-width: 300px; max-width: 380px;
+  box-shadow: var(--shadow-lg); display: none; z-index: 999;
+  overflow: hidden;
+}
+.search-result-item {
+  padding: 10px 16px; cursor: pointer; font-size: 0.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.15s;
+}
+.search-result-item:hover { background: rgba(24,119,242,0.12); }
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item span { color: var(--blue-light); font-weight: 500; }
+#search-bar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.header-author { font-size: 0.72rem; color: var(--gray-600); font-family: var(--font-body); }
+.header-author strong { color: var(--gray-400); }
+
+/* ─── SECTIONS ─── */
+.section {
+  display: none; padding: 80px 40px 60px;
+  animation: fadeInUp 0.4s ease both;
+  min-height: 100vh;
+}
+.section.active { display: block; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── HERO ─── */
+#sec-hero {
+  display: none; position: relative; overflow: hidden;
+  padding: 0; min-height: 100vh; align-items: center;
+}
+#sec-hero.active { display: flex; }
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(24,119,242,0.18) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 40% at 20% 80%, rgba(10,61,122,0.25) 0%, transparent 60%),
+              linear-gradient(160deg, #0d1825 0%, #0a1a2e 50%, #0d1825 100%);
+}
+
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.07;
+  background-image: linear-gradient(rgba(24,119,242,0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24,119,242,0.5) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.hero-nodes {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.hero-nodes .node {
+  position: absolute; border-radius: 50%;
+  background: var(--blue); opacity: 0;
+  animation: nodePulse 4s ease-in-out infinite;
+}
+
+@keyframes nodePulse {
+  0%,100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.6; transform: scale(1); }
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 80px 60px; max-width: 900px;
+}
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(24,119,242,0.12);
+  border: 1px solid rgba(24,119,242,0.3);
+  border-radius: 50px; padding: 6px 16px;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--blue-light);
+  margin-bottom: 28px; backdrop-filter: blur(8px);
+}
+.hero-tag::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--blue-light);
+  animation: blink 1.5s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0.2} }
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  font-weight: 800; line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--white); margin-bottom: 20px;
+}
+.hero-title .highlight {
+  background: linear-gradient(90deg, var(--blue), var(--blue-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1rem; color: var(--gray-400); max-width: 580px;
+  line-height: 1.7; margin-bottom: 40px;
+}
+
+.hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: white; border: none; border-radius: 10px;
+  padding: 13px 26px; font-size: 0.88rem; font-weight: 600;
+  cursor: pointer; font-family: var(--font-body);
+  box-shadow: 0 6px 24px rgba(24,119,242,0.35);
+  transition: all 0.25s; text-decoration: none;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(24,119,242,0.45);
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.05);
+  color: var(--gray-200); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px; padding: 13px 26px;
+  font-size: 0.88rem; font-weight: 500; cursor: pointer;
+  font-family: var(--font-body); transition: all 0.25s; text-decoration: none;
+}
+.btn-secondary:hover {
+  background: rgba(24,119,242,0.1);
+  border-color: rgba(24,119,242,0.3); color: white;
+}
+
+.hero-stats {
+  position: absolute; bottom: 50px; right: 60px;
+  display: flex; gap: 32px;
+}
+.hero-stat { text-align: center; }
+.hero-stat .num {
+  font-family: var(--font-display); font-size: 1.6rem; font-weight: 800;
+  background: linear-gradient(90deg, var(--blue), var(--blue-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-stat .lbl { font-size: 0.65rem; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ─── SECTION HEADERS ─── */
+.sec-header { margin-bottom: 40px; }
+.sec-tag {
+  display: inline-block; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue-light); margin-bottom: 12px;
+  padding: 4px 12px; background: rgba(24,119,242,0.1);
+  border-radius: 50px; border: 1px solid rgba(24,119,242,0.2);
+}
+.sec-title {
+  font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 800; line-height: 1.15; color: var(--white);
+  letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.sec-title span {
+  background: linear-gradient(90deg, var(--blue), var(--blue-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.sec-lead {
+  font-size: 0.95rem; color: var(--gray-400); max-width: 680px;
+  line-height: 1.75;
+}
+
+/* ─── DIVIDER ─── */
+.divider {
+  height: 1px; background: linear-gradient(90deg, rgba(24,119,242,0.3), transparent);
+  margin: 32px 0;
+}
+
+/* ─── TEXT BLOCKS ─── */
+.text-block {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(24,119,242,0.1);
+  border-radius: var(--radius); padding: 28px 32px; margin-bottom: 20px;
+  line-height: 1.8; color: var(--gray-200); font-size: 0.92rem;
+}
+.text-block p + p { margin-top: 14px; }
+.text-block strong { color: var(--white); font-weight: 600; }
+
+/* ─── FEATURE CARDS GRID ─── */
+.cards-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px; margin-top: 24px;
+}
+
+.feature-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(24,119,242,0.12);
+  border-radius: var(--radius); padding: 24px;
+  cursor: pointer; transition: all 0.28s;
+  position: relative; overflow: hidden;
+}
+.feature-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(24,119,242,0.08), transparent);
+  opacity: 0; transition: opacity 0.28s;
+}
+.feature-card:hover {
+  border-color: rgba(24,119,242,0.4);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+.feature-card:hover::before { opacity: 1; }
+
+.card-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(24,119,242,0.2), rgba(24,119,242,0.05));
+  border: 1px solid rgba(24,119,242,0.2);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px; font-size: 1.2rem;
+}
+.card-title {
+  font-family: var(--font-display); font-size: 0.88rem; font-weight: 700;
+  color: var(--white); margin-bottom: 8px;
+}
+.card-desc {
+  font-size: 0.78rem; color: var(--gray-400); line-height: 1.6;
+}
+.card-expand {
+  display: none; margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid rgba(24,119,242,0.1);
+  font-size: 0.8rem; color: var(--gray-200); line-height: 1.7;
+  animation: fadeInUp 0.3s ease both;
+}
+.feature-card.expanded .card-expand { display: block; }
+.card-arrow {
+  position: absolute; top: 20px; right: 20px;
+  font-size: 0.7rem; color: var(--gray-600);
+  transition: transform 0.25s, color 0.25s;
+}
+.feature-card.expanded .card-arrow { transform: rotate(180deg); color: var(--blue-light); }
+
+/* ─── PILLARS ─── */
+.pillars-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px; margin-top: 24px;
+}
+.pillar-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(24,119,242,0.12);
+  border-radius: var(--radius); overflow: hidden; cursor: pointer;
+  transition: all 0.28s;
+}
+.pillar-card:hover { border-color: rgba(24,119,242,0.4); box-shadow: var(--shadow); }
+.pillar-header {
+  padding: 20px 24px; display: flex; align-items: center; gap: 14px;
+}
+.pillar-num {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 0.8rem; font-weight: 800;
+  color: white; flex-shrink: 0; box-shadow: 0 4px 14px var(--blue-glow);
+}
+.pillar-name {
+  font-family: var(--font-display); font-size: 0.92rem; font-weight: 700;
+  color: var(--white);
+}
+.pillar-body {
+  display: none; padding: 0 24px 20px;
+  font-size: 0.82rem; color: var(--gray-400); line-height: 1.75;
+  border-top: 1px solid rgba(24,119,242,0.1);
+  padding-top: 16px;
+  animation: fadeInUp 0.3s ease both;
+}
+.pillar-card.open .pillar-body { display: block; }
+
+/* ─── COMPARISON PANEL ─── */
+.compare-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px; margin-top: 24px;
+}
+.compare-col {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(24,119,242,0.1);
+  border-radius: var(--radius); overflow: hidden;
+}
+.compare-col-header {
+  padding: 16px 20px;
+  font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.compare-col:nth-child(1) .compare-col-header { background: rgba(220,50,50,0.12); color: #ff8080; }
+.compare-col:nth-child(2) .compare-col-header { background: rgba(24,119,242,0.12); color: var(--blue-light); }
+.compare-col:nth-child(3) .compare-col-header { background: rgba(50,200,100,0.12); color: #7de89a; }
+.compare-item {
+  padding: 12px 20px; font-size: 0.8rem; color: var(--gray-400);
+  border-bottom: 1px solid rgba(255,255,255,0.04); line-height: 1.5;
+}
+
+/* ─── SUBMENU TABS ─── */
+.tab-nav {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.tab-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(24,119,242,0.12);
+  border-radius: 8px; padding: 8px 16px;
+  font-size: 0.78rem; font-weight: 500; color: var(--gray-400);
+  cursor: pointer; font-family: var(--font-body); transition: all 0.2s;
+}
+.tab-btn:hover { border-color: rgba(24,119,242,0.35); color: var(--white); }
+.tab-btn.active {
+  background: rgba(24,119,242,0.15);
+  border-color: var(--blue); color: var(--white); font-weight: 600;
+}
+.tab-panel { display: none; animation: fadeInUp 0.3s ease both; }
+.tab-panel.active { display: block; }
+
+/* ─── ALERT / RISKS ─── */
+.risk-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px; margin-top: 24px;
+}
+.risk-card {
+  background: rgba(220,50,50,0.06);
+  border: 1px solid rgba(220,50,50,0.2);
+  border-radius: var(--radius); padding: 20px;
+  transition: all 0.25s;
+}
+.risk-card:hover { border-color: rgba(220,50,50,0.4); background: rgba(220,50,50,0.1); }
+.risk-icon { font-size: 1.4rem; margin-bottom: 10px; }
+.risk-title {
+  font-family: var(--font-display); font-size: 0.85rem; font-weight: 700;
+  color: #ff8080; margin-bottom: 7px;
+}
+.risk-desc { font-size: 0.77rem; color: var(--gray-400); line-height: 1.6; }
+
+/* ─── GOVERNANCE PANEL ─── */
+.gov-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px; margin-top: 24px;
+}
+.gov-card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(24,119,242,0.1);
+  border-radius: var(--radius); padding: 22px;
+  border-left: 3px solid var(--blue); transition: all 0.25s;
+}
+.gov-card:hover { background: rgba(24,119,242,0.06); }
+.gov-card-title {
+  font-family: var(--font-display); font-size: 0.88rem; font-weight: 700;
+  color: var(--blue-light); margin-bottom: 8px;
+}
+.gov-card-desc { font-size: 0.8rem; color: var(--gray-400); line-height: 1.65; }
+
+/* ─── QUOTE BLOCK ─── */
+.quote-block {
+  background: linear-gradient(135deg, rgba(24,119,242,0.08), rgba(10,61,122,0.12));
+  border: 1px solid rgba(24,119,242,0.2);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--radius); padding: 32px 36px; margin: 32px 0;
+  position: relative; overflow: hidden;
+}
+.quote-block::before {
+  content: '"'; position: absolute; top: -10px; left: 20px;
+  font-size: 8rem; color: rgba(24,119,242,0.08); font-family: Georgia, serif; line-height: 1;
+}
+.quote-text {
+  font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 600; color: var(--white); line-height: 1.5;
+  position: relative; z-index: 1;
+}
+.quote-author { margin-top: 16px; font-size: 0.78rem; color: var(--blue-light); }
+
+/* ─── CONCLUSION ─── */
+.conclusion-highlight {
+  background: linear-gradient(135deg, rgba(24,119,242,0.12), rgba(10,61,122,0.15));
+  border: 1px solid rgba(24,119,242,0.25); border-radius: var(--radius);
+  padding: 40px; text-align: center; margin: 32px 0;
+}
+.conclusion-highlight .main-quote {
+  font-family: var(--font-display); font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  font-weight: 700; color: var(--white); line-height: 1.45; margin-bottom: 20px;
+}
+.conclusion-highlight .main-quote em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--blue), var(--blue-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ─── ACCORDION ─── */
+.accordion { margin-top: 20px; }
+.acc-item {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(24,119,242,0.1);
+  border-radius: var(--radius-sm); margin-bottom: 8px; overflow: hidden;
+}
+.acc-trigger {
+  width: 100%; padding: 16px 20px; display: flex; align-items: center;
+  justify-content: space-between; cursor: pointer;
+  font-family: var(--font-body); font-size: 0.88rem; font-weight: 500;
+  color: var(--gray-200); background: none; border: none; text-align: left;
+  transition: color 0.2s;
+}
+.acc-trigger:hover { color: var(--white); }
+.acc-trigger.open { color: var(--white); }
+.acc-arrow {
+  font-size: 0.7rem; color: var(--gray-600);
+  transition: transform 0.25s, color 0.25s;
+}
+.acc-trigger.open .acc-arrow { transform: rotate(180deg); color: var(--blue-light); }
+.acc-body {
+  display: none; padding: 0 20px 16px;
+  font-size: 0.82rem; color: var(--gray-400); line-height: 1.75;
+  animation: fadeInUp 0.25s ease both;
+}
+.acc-body.open { display: block; }
+
+/* ─── BACK TO TOP ─── */
+#back-top {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 44px; height: 44px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 800;
+  box-shadow: 0 6px 20px var(--blue-glow);
+  opacity: 0; transform: translateY(8px); transition: all 0.3s;
+  font-size: 1rem; color: white; border: none;
+}
+#back-top.visible { opacity: 1; transform: translateY(0); }
+#back-top:hover { transform: translateY(-2px); }
+
+/* ─── FOOTER ─── */
+#footer {
+  background: rgba(10,16,25,0.9);
+  border-top: 1px solid rgba(24,119,242,0.12);
+  padding: 40px; text-align: center;
+}
+.footer-logo-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 14px; margin-bottom: 16px;
+}
+.footer-badge {
+  width: 46px; height: 46px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px var(--blue-glow);
+  font-size: 1.2rem;
+}
+.footer-name {
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: var(--white);
+}
+.footer-role { font-size: 0.72rem; color: var(--gray-600); letter-spacing: 0.06em; }
+.footer-divider { width: 40px; height: 1px; background: rgba(24,119,242,0.3); margin: 16px auto; }
+.footer-topic { font-size: 0.75rem; color: var(--gray-400); max-width: 480px; margin: 0 auto 12px; line-height: 1.6; }
+.footer-copy { font-size: 0.65rem; color: var(--gray-600); }
+
+/* ─── NETWORK DECORATION ─── */
+.neural-deco {
+  position: absolute; right: -40px; top: 50%;
+  transform: translateY(-50%); opacity: 0.08;
+  pointer-events: none;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.open { transform: translateX(0); }
+  #overlay.visible { display: block; }
+  #menu-toggle { display: flex; }
+  #main { margin-left: 0; }
+  #search-bar { left: 0; padding: 10px 16px 10px 66px; }
+  .section { padding: 72px 20px 50px; }
+  .hero-content { padding: 60px 24px; }
+  .hero-stats { position: static; padding: 0 24px 40px; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 1.7rem; }
+  #sec-hero { align-items: flex-start; }
+}
+
+@media (max-width: 560px) {
+  .cards-grid, .pillars-grid, .risk-grid, .gov-grid { grid-template-columns: 1fr; }
+  .hero-buttons { flex-direction: column; }
+  .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+  .header-author { display: none; }
+}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ─── NEURAL SVG background ─── */
+.neural-bg {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 45%;
+  opacity: 0.06; pointer-events: none; overflow: hidden;
+}
+
+/* list style */
+.styled-list { list-style: none; margin: 14px 0; }
+.styled-list li {
+  padding: 8px 0 8px 20px; position: relative;
+  font-size: 0.85rem; color: var(--gray-400); line-height: 1.5;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.styled-list li::before {
+  content: '›'; position: absolute; left: 0;
+  color: var(--blue-light); font-size: 1rem; line-height: 1.3;
+}
+
+.badge-inline {
+  display: inline-block; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(24,119,242,0.15); color: var(--blue-light);
+  padding: 2px 8px; border-radius: 4px; margin-right: 6px;
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div id="sidebar-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+    </div>
+    <div class="logo-title">IA na Gestão Pública</div>
+    <div class="logo-sub">Guilherme Doelle</div>
+  </div>
+  <div id="sidebar-nav">
+    <div class="nav-section-label">Início</div>
+    <div class="nav-item active" data-sec="hero"><span class="nav-num">00</span> Tela Inicial</div>
+    <div class="nav-section-label">Fundamentos</div>
+    <div class="nav-item" data-sec="intro"><span class="nav-num">01</span> Introdução</div>
+    <div class="nav-item" data-sec="what"><span class="nav-num">02</span> O Que é IA na Gestão Pública</div>
+    <div class="nav-item" data-sec="modern"><span class="nav-num">03</span> IA e Modernização do Estado</div>
+    <div class="nav-section-label">Aplicações</div>
+    <div class="nav-item" data-sec="correct"><span class="nav-num">04</span> Importância do Uso Correto</div>
+    <div class="nav-item" data-sec="exec"><span class="nav-num">05</span> IA no Poder Executivo</div>
+    <div class="nav-item" data-sec="legis"><span class="nav-num">06</span> IA no Poder Legislativo</div>
+    <div class="nav-section-label">Governança</div>
+    <div class="nav-item" data-sec="risks"><span class="nav-num">07</span> Riscos do Uso Irresponsável</div>
+    <div class="nav-item" data-sec="gov"><span class="nav-num">08</span> Governança e Regulamentação</div>
+    <div class="nav-item" data-sec="pro"><span class="nav-num">09</span> O Papel do Profissional Público</div>
+    <div class="nav-item" data-sec="conc"><span class="nav-num">10</span> Conclusão</div>
+  </div>
+  <div id="sidebar-footer">
+    <strong>Guilherme Doelle</strong>
+    Especialista em Comunicação Institucional
+  </div>
+</nav>
+
+<!-- OVERLAY -->
+<div id="overlay"></div>
+
+<!-- HAMBURGER -->
+<button id="menu-toggle" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- SEARCH BAR -->
+<div id="search-bar">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+  <input id="search-input" type="text" placeholder="Buscar tópico..." autocomplete="off">
+  <div id="search-results"></div>
+  <div id="search-bar-right">
+    <div class="header-author"><strong>Guilherme Doelle</strong> · Especialista em Comunicação Institucional</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main id="main">
+
+<!-- ══ HERO ══ -->
+<section id="sec-hero" class="section active">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-nodes">
+    <div class="node" style="width:8px;height:8px;top:25%;left:65%;animation-delay:0s"></div>
+    <div class="node" style="width:5px;height:5px;top:40%;left:75%;animation-delay:0.8s"></div>
+    <div class="node" style="width:10px;height:10px;top:60%;left:55%;animation-delay:1.6s"></div>
+    <div class="node" style="width:6px;height:6px;top:20%;left:80%;animation-delay:2.4s"></div>
+    <div class="node" style="width:7px;height:7px;top:70%;left:82%;animation-delay:3.2s"></div>
+  </div>
+  <div class="neural-bg">
+    <svg width="100%" height="100%" viewBox="0 0 500 800" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#1877F2" stroke-width="1" fill="none">
+        <circle cx="100" cy="150" r="8" fill="#1877F2"/>
+        <circle cx="250" cy="100" r="6" fill="#1877F2"/>
+        <circle cx="400" cy="200" r="10" fill="#1877F2"/>
+        <circle cx="150" cy="350" r="7" fill="#1877F2"/>
+        <circle cx="350" cy="400" r="8" fill="#1877F2"/>
+        <circle cx="80" cy="550" r="5" fill="#1877F2"/>
+        <circle cx="280" cy="600" r="9" fill="#1877F2"/>
+        <circle cx="450" cy="500" r="6" fill="#1877F2"/>
+        <line x1="100" y1="150" x2="250" y2="100"/>
+        <line x1="250" y1="100" x2="400" y2="200"/>
+        <line x1="100" y1="150" x2="150" y2="350"/>
+        <line x1="400" y1="200" x2="350" y2="400"/>
+        <line x1="150" y1="350" x2="350" y2="400"/>
+        <line x1="150" y1="350" x2="80" y2="550"/>
+        <line x1="350" y1="400" x2="280" y2="600"/>
+        <line x1="350" y1="400" x2="450" y2="500"/>
+        <line x1="80" y1="550" x2="280" y2="600"/>
+        <line x1="280" y1="600" x2="450" y2="500"/>
+        <line x1="250" y1="100" x2="350" y2="400"/>
+        <line x1="400" y1="200" x2="450" y2="500"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">Portal Institucional · Transformação Digital</div>
+    <h1 class="hero-title">
+      A Importância do Uso Correto da <span class="highlight">Inteligência Artificial</span> na Gestão Pública
+    </h1>
+    <p class="hero-subtitle">
+      Uma abordagem estratégica, ética e institucional sobre como a IA pode modernizar governos, fortalecer a transparência e ampliar a eficiência do setor público brasileiro.
+    </p>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="goTo('intro')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Explorar Conteúdo
+      </button>
+      <button class="btn-secondary" onclick="openTopicsMenu()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Navegar pelos Tópicos
+      </button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">10</div><div class="lbl">Seções</div></div>
+    <div class="hero-stat"><div class="num">5</div><div class="lbl">Pilares</div></div>
+    <div class="hero-stat"><div class="num">2</div><div class="lbl">Poderes</div></div>
+  </div>
+</section>
+
+<!-- ══ 01 · INTRODUÇÃO ══ -->
+<section id="sec-intro" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">01 · Introdução</div>
+    <h2 class="sec-title">Transformação Digital como <span>Necessidade Imediata</span></h2>
+    <p class="sec-lead">A inteligência artificial surge como uma das ferramentas mais relevantes do século XXI para modernizar governos e aproximar o poder público da população.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="text-block reveal">
+    <p>A transformação digital deixou de ser uma tendência futura para se tornar uma <strong>necessidade imediata</strong> dentro da administração pública. Em um cenário marcado pelo aumento da demanda por eficiência, transparência, economicidade e rapidez na prestação dos serviços públicos, a inteligência artificial surge como uma das ferramentas mais relevantes do século XXI para modernizar governos, otimizar processos e aproximar o poder público da população.</p>
+  </div>
+  <div class="text-block reveal">
+    <p>No entanto, tão importante quanto utilizar inteligência artificial é compreender a forma <strong>correta, ética e estratégica</strong> de sua aplicação. O uso irresponsável ou despreparado dessas tecnologias pode gerar riscos administrativos, jurídicos, institucionais e sociais.</p>
+    <p>Por isso, o debate atual não deve ser apenas sobre "usar ou não usar" inteligência artificial, mas sim sobre como utilizá-la de maneira <strong>responsável, eficiente e alinhada aos princípios constitucionais</strong> da administração pública.</p>
+  </div>
+  <div class="quote-block reveal">
+    <p class="quote-text">A inteligência artificial, quando aplicada corretamente, possui potencial para revolucionar tanto o Poder Executivo quanto o Poder Legislativo, promovendo ganhos de produtividade, melhoria na tomada de decisões, fortalecimento da transparência pública e maior capacidade de resposta às necessidades da sociedade.</p>
+    <div class="quote-author">— Guilherme Doelle, Especialista em Comunicação Institucional</div>
+  </div>
+</section>
+
+<!-- ══ 02 · O QUE É IA ══ -->
+<section id="sec-what" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">02 · Definição</div>
+    <h2 class="sec-title">O Que é <span>Inteligência Artificial</span> na Gestão Pública</h2>
+    <p class="sec-lead">Sistemas inteligentes capazes de simular capacidades humanas para otimizar a máquina pública. Clique em cada card para saber mais.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="text-block reveal">
+    <p>A inteligência artificial pode ser definida como um <strong>conjunto de tecnologias capazes de simular capacidades humanas</strong>, como interpretação de dados, aprendizado, reconhecimento de padrões, geração de conteúdo, automação de tarefas e apoio à tomada de decisões.</p>
+    <p>A utilização correta dessas ferramentas pode representar um divisor de águas na eficiência da máquina pública.</p>
+  </div>
+  <div class="cards-grid">
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">⚙️</div>
+      <div class="card-title">Automatizar Processos Administrativos</div>
+      <div class="card-desc">Eliminação de tarefas manuais repetitivas e burocráticas.</div>
+      <div class="card-expand">A IA permite automatizar rotinas como emissão de documentos, triagem de solicitações e fluxos de aprovação, liberando servidores para atividades de maior valor estratégico. Isso reduz erros humanos e agiliza significativamente os prazos de resposta ao cidadão.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">🗄️</div>
+      <div class="card-title">Organizar Grandes Volumes de Dados</div>
+      <div class="card-desc">Processamento e estruturação de informações em larga escala.</div>
+      <div class="card-expand">Governos lidam com quantidades massivas de dados diariamente. A IA organiza, classifica e torna esses dados acessíveis e acionáveis, possibilitando análises que seriam impossíveis manualmente — desde cadastros de cidadãos até históricos de contratos e licitações.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">📢</div>
+      <div class="card-title">Melhorar a Comunicação Institucional</div>
+      <div class="card-desc">Conteúdos mais claros, ágeis e adaptados ao público.</div>
+      <div class="card-expand">A IA auxilia na produção de comunicados, relatórios, notas públicas e respostas a demandas com mais rapidez e consistência. Ferramentas de linguagem natural permitem adaptar mensagens a diferentes públicos, desde especialistas até a população em geral.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Reduzir Burocracias</div>
+      <div class="card-desc">Simplificação de fluxos e eliminação de redundâncias.</div>
+      <div class="card-expand">Sistemas inteligentes identificam gargalos burocráticos, sugerem simplificações e automatizam etapas intermediárias, tornando serviços públicos mais ágeis para o cidadão e menos custosos para o Estado.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">Aumentar a Eficiência Operacional</div>
+      <div class="card-desc">Mais resultados com os mesmos recursos disponíveis.</div>
+      <div class="card-expand">Ao otimizar rotas de serviço, distribuir cargas de trabalho e prever demandas, a IA eleva a produtividade de toda a estrutura pública sem necessariamente exigir aumento de gastos — um princípio essencial de eficiência na gestão pública.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">🧑‍💼</div>
+      <div class="card-title">Auxiliar Gestores Públicos</div>
+      <div class="card-desc">Inteligência de apoio à decisão estratégica.</div>
+      <div class="card-expand">Dashboards inteligentes, análises preditivas e relatórios automatizados oferecem ao gestor uma visão clara do cenário institucional, embasando decisões com dados confiáveis e atualizados em tempo real.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">🔍</div>
+      <div class="card-title">Fortalecer a Transparência</div>
+      <div class="card-desc">Dados públicos mais acessíveis e compreensíveis.</div>
+      <div class="card-expand">Ferramentas de IA transformam dados brutos em informações compreensíveis para o cidadão, automatizam relatórios de prestação de contas e facilitam auditorias externas, contribuindo diretamente para a accountability pública.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">👥</div>
+      <div class="card-title">Facilitar o Atendimento ao Cidadão</div>
+      <div class="card-desc">Respostas mais rápidas e personalizadas à população.</div>
+      <div class="card-expand">Assistentes virtuais e chatbots inteligentes oferecem atendimento 24 horas, respondem dúvidas frequentes, orientam sobre serviços e encaminham demandas ao setor correto, reduzindo filas presenciais e melhorando a experiência do cidadão.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Produzir Análises Estratégicas</div>
+      <div class="card-desc">Inteligência de dados para decisões mais assertivas.</div>
+      <div class="card-expand">A IA cruza múltiplas bases de dados e identifica padrões invisíveis ao olho humano, produzindo análises que antecipam tendências, detectam anomalias e fundamentam políticas públicas com base empírica sólida.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">🏛️</div>
+      <div class="card-title">Apoiar Políticas Públicas</div>
+      <div class="card-desc">Formulação baseada em evidências e dados reais.</div>
+      <div class="card-expand">Ao simular cenários, modelar impactos e identificar populações vulneráveis, a IA apoia a formulação, implementação e avaliação de políticas públicas com muito mais precisão e efetividade do que os métodos tradicionais permitem.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 · MODERNIZAÇÃO ══ -->
+<section id="sec-modern" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">03 · Modernização</div>
+    <h2 class="sec-title">IA Como Ferramenta de <span>Modernização do Estado</span></h2>
+    <p class="sec-lead">Como a inteligência artificial transforma estruturas administrativas que há décadas operam de maneira tradicional.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="text-block reveal">
+    <p>Historicamente, a administração pública brasileira enfrenta desafios relacionados à <strong>burocracia excessiva, lentidão processual, limitação técnica e dificuldade de integração</strong> entre setores. Nesse contexto, a inteligência artificial surge como um mecanismo capaz de modernizar estruturas administrativas que há décadas operam de maneira tradicional.</p>
+    <p><strong>A IA não substitui o gestor público. Ela amplia sua capacidade técnica, operacional e estratégica.</strong></p>
+  </div>
+  <div class="compare-grid reveal">
+    <div class="compare-col">
+      <div class="compare-col-header">⚠ Problemas Históricos</div>
+      <div class="compare-item">Burocracia excessiva em processos simples</div>
+      <div class="compare-item">Lentidão processual generalizada</div>
+      <div class="compare-item">Limitação técnica das equipes</div>
+      <div class="compare-item">Dificuldade de integração entre setores</div>
+      <div class="compare-item">Dados descentralizados e inacessíveis</div>
+      <div class="compare-item">Atendimento presencial sobrecarregado</div>
+      <div class="compare-item">Decisões baseadas em informações incompletas</div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-col-header">⚙ Como a IA Atua</div>
+      <div class="compare-item">Automação de fluxos administrativos</div>
+      <div class="compare-item">Processamento instantâneo de demandas</div>
+      <div class="compare-item">Suporte técnico e analítico inteligente</div>
+      <div class="compare-item">Integração de sistemas e bases de dados</div>
+      <div class="compare-item">Centralização e organização de informações</div>
+      <div class="compare-item">Atendimento digital 24 horas</div>
+      <div class="compare-item">Análise preditiva baseada em dados reais</div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-col-header">✓ Benefícios Obtidos</div>
+      <div class="compare-item">Processos mais ágeis e eficientes</div>
+      <div class="compare-item">Respostas rápidas ao cidadão</div>
+      <div class="compare-item">Capacidade técnica ampliada</div>
+      <div class="compare-item">Gestão integrada e eficaz</div>
+      <div class="compare-item">Tomada de decisão embasada</div>
+      <div class="compare-item">Maior satisfação da população</div>
+      <div class="compare-item">Políticas públicas mais assertivas</div>
+    </div>
+  </div>
+  <div class="text-block reveal" style="margin-top:24px">
+    <p>Governos modernos ao redor do mundo já utilizam inteligência artificial para <strong>prever demandas em saúde, detectar fraudes, otimizar trânsito urbano, melhorar arrecadação tributária e ampliar eficiência administrativa</strong>. No Brasil, a tendência também cresce rapidamente.</p>
+    <p>Porém, a efetividade dessa transformação depende diretamente da <strong>qualificação técnica dos profissionais responsáveis</strong> por operar essas ferramentas.</p>
+  </div>
+</section>
+
+<!-- ══ 04 · USO CORRETO ══ -->
+<section id="sec-correct" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">04 · Uso Correto</div>
+    <h2 class="sec-title">A Importância do <span>Uso Correto</span> da Inteligência Artificial</h2>
+    <p class="sec-lead">Cinco pilares fundamentais para uma aplicação responsável, ética e estratégica da IA na gestão pública.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="text-block reveal">
+    <p>O uso correto da inteligência artificial exige <strong>responsabilidade institucional, supervisão humana, critérios técnicos e compromisso ético</strong>. A IA jamais deve ser utilizada como substituta absoluta da análise humana, especialmente em decisões sensíveis envolvendo direitos fundamentais, orçamento público, políticas sociais e processos legislativos.</p>
+  </div>
+  <div class="pillars-grid reveal">
+    <div class="pillar-card" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div class="pillar-num">1</div>
+        <div class="pillar-name">Supervisão Humana Permanente</div>
+      </div>
+      <div class="pillar-body">
+        Toda informação produzida por inteligência artificial precisa ser <strong>revisada por profissionais capacitados</strong>. A tecnologia deve servir como ferramenta de apoio, e não como autoridade final. Nenhuma decisão de impacto sobre direitos fundamentais, políticas sociais ou orçamento público deve ser tomada exclusivamente com base em outputs automatizados, sem análise e validação humana qualificada.
+      </div>
+    </div>
+    <div class="pillar-card" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div class="pillar-num">2</div>
+        <div class="pillar-name">Ética e Transparência</div>
+      </div>
+      <div class="pillar-body">
+        O cidadão precisa saber <strong>quando ferramentas automatizadas estão sendo utilizadas</strong> pelo poder público. A transparência fortalece a confiança institucional e é um princípio constitucional da administração pública. O uso ético da IA implica não apenas declarar sua utilização, mas também assegurar que os algoritmos empregados não perpetuem discriminações ou distorçam resultados em benefício de grupos específicos.
+      </div>
+    </div>
+    <div class="pillar-card" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div class="pillar-num">3</div>
+        <div class="pillar-name">Segurança da Informação</div>
+      </div>
+      <div class="pillar-body">
+        Dados públicos e informações sensíveis precisam ser protegidos. O uso da IA deve respeitar a <strong>Lei Geral de Proteção de Dados (LGPD)</strong> e os princípios constitucionais da administração pública. Isso inclui criptografia, controle de acesso, auditoria de logs e protocolos de resposta a incidentes. A segurança da informação não é opcional — é mandatória para qualquer implementação de IA no setor público.
+      </div>
+    </div>
+    <div class="pillar-card" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div class="pillar-num">4</div>
+        <div class="pillar-name">Capacitação Técnica</div>
+      </div>
+      <div class="pillar-body">
+        A tecnologia exige preparo. <strong>Gestores, assessores, servidores e equipes técnicas</strong> precisam compreender os limites, riscos e potencialidades da inteligência artificial. A capacitação contínua é um investimento estratégico que determina a qualidade dos resultados. Profissionais que entendem como a IA funciona são capazes de extrair o melhor da tecnologia e evitar erros graves causados pelo uso inadequado.
+      </div>
+    </div>
+    <div class="pillar-card" onclick="togglePillar(this)">
+      <div class="pillar-header">
+        <div class="pillar-num">5</div>
+        <div class="pillar-name">Uso Estratégico</div>
+      </div>
+      <div class="pillar-body">
+        A IA não deve ser vista apenas como ferramenta para "fazer textos" ou automatizar tarefas simples. Seu verdadeiro potencial está na <strong>análise estratégica, otimização de políticas públicas e inteligência institucional</strong>. Gestores que compreendem isso utilizam a IA para antecipar cenários, identificar tendências, simular impactos de políticas e tomar decisões fundamentadas em evidências sólidas.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 05 · EXECUTIVO ══ -->
+<section id="sec-exec" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">05 · Poder Executivo</div>
+    <h2 class="sec-title">Inteligência Artificial no <span>Poder Executivo</span></h2>
+    <p class="sec-lead">Como prefeituras, governos estaduais e órgãos federais podem utilizar IA para melhorar a gestão administrativa e aproximar o governo da população.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('exec','atend')">Atendimento ao Cidadão</button>
+    <button class="tab-btn" onclick="switchTab('exec','saude')">Saúde Pública</button>
+    <button class="tab-btn" onclick="switchTab('exec','educ')">Educação Pública</button>
+    <button class="tab-btn" onclick="switchTab('exec','finan')">Gestão Financeira</button>
+    <button class="tab-btn" onclick="switchTab('exec','comuni')">Comunicação Institucional</button>
+    <button class="tab-btn" onclick="switchTab('exec','urban')">Planejamento Urbano</button>
+  </div>
+  <div id="exec-atend" class="tab-panel active">
+    <div class="text-block">
+      <p><span class="badge-inline">Atendimento</span><strong>Chatbots inteligentes</strong> podem agilizar atendimentos, responder dúvidas frequentes, emitir orientações e reduzir filas presenciais.</p>
+      <p style="margin-top:14px">Uma prefeitura pode implementar um <strong>assistente virtual</strong> que informe horários de consultas, emissão de alvarás, calendário de vacinação ou situação tributária do cidadão — disponível 24 horas por dia, 7 dias por semana, sem necessidade de deslocamento presencial.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">💬</div>
+        <div class="card-title">Chatbots de Atendimento</div>
+        <div class="card-desc">Assistentes virtuais integrados a portais municipais e estaduais.</div>
+        <div class="card-expand">Sistemas de IA conversacional capazes de atender simultaneamente milhares de cidadãos, resolver dúvidas, emitir guias e encaminhar casos complexos para servidores humanos — com rastreabilidade total das interações.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">📱</div>
+        <div class="card-title">Serviços Digitais Integrados</div>
+        <div class="card-desc">Plataformas unificadas de serviços ao cidadão.</div>
+        <div class="card-expand">A IA permite criar portais inteligentes que identificam o perfil do cidadão e oferecem proativamente os serviços mais relevantes para sua situação, reduzindo a necessidade de o cidadão conhecer toda a estrutura burocrática para acessar seus direitos.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+  <div id="exec-saude" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Saúde</span>A inteligência artificial pode auxiliar na <strong>análise de demandas, identificação de regiões com maior incidência de doenças e otimização do atendimento</strong> em toda a rede pública de saúde.</p>
+      <p style="margin-top:14px">Sistemas inteligentes podem <strong>cruzar dados epidemiológicos</strong> para prever surtos sazonais e direcionar campanhas preventivas com muito mais eficiência do que os modelos tradicionais de vigilância em saúde.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🏥</div>
+        <div class="card-title">Vigilância Epidemiológica</div>
+        <div class="card-desc">Detecção precoce de surtos e padrões de doenças.</div>
+        <div class="card-expand">Algoritmos de machine learning analisam dados de atendimentos, exames e deslocamentos para identificar padrões que precedem surtos de doenças infecciosas, permitindo ação preventiva antes que o problema se agrave.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">📅</div>
+        <div class="card-title">Gestão de Filas e Agendamentos</div>
+        <div class="card-desc">Otimização do fluxo de pacientes nas unidades de saúde.</div>
+        <div class="card-expand">Sistemas preditivos de demanda permitem dimensionar equipes, estoques de medicamentos e agendamentos com muito mais precisão, reduzindo tempo de espera e melhorando a qualidade do atendimento à população.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+  <div id="exec-educ" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Educação</span>A IA pode apoiar <strong>planejamento educacional, análise de desempenho escolar e personalização de conteúdos pedagógicos</strong> em toda a rede pública de ensino.</p>
+      <p style="margin-top:14px">Secretarias de educação podem <strong>identificar índices de evasão escolar</strong> antes mesmo do abandono efetivo do aluno, permitindo intervenções preventivas e redução da exclusão educacional.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">📚</div>
+        <div class="card-title">Prevenção da Evasão Escolar</div>
+        <div class="card-desc">Identificação precoce de alunos em risco de abandono.</div>
+        <div class="card-expand">Cruzando dados de frequência, desempenho, perfil socioeconômico e contexto familiar, a IA pode sinalizar alunos com maior risco de evasão, permitindo que as equipes pedagógicas intervenham antes que o problema se consolide.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">📈</div>
+        <div class="card-title">Análise de Desempenho Educacional</div>
+        <div class="card-desc">Dados para políticas pedagógicas mais eficazes.</div>
+        <div class="card-expand">Plataformas analíticas permitem acompanhar o desempenho de escolas, turmas e alunos individualmente, identificando onde concentrar recursos pedagógicos e quais metodologias estão gerando melhores resultados.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+  <div id="exec-finan" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Finanças</span>Ferramentas inteligentes podem <strong>detectar inconsistências fiscais, reduzir fraudes e melhorar arrecadação</strong> tributária de forma significativa.</p>
+      <p style="margin-top:14px">Sistemas automatizados conseguem <strong>identificar padrões suspeitos</strong> em contratos, licitações e movimentações tributárias com uma velocidade e precisão impossíveis para equipes humanas trabalhando isoladamente.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🔎</div>
+        <div class="card-title">Detecção de Fraudes em Licitações</div>
+        <div class="card-desc">Análise automatizada de contratos e processos licitatórios.</div>
+        <div class="card-expand">Algoritmos de detecção de anomalias analisam preços, fornecedores, histórico de contratos e padrões de comportamento para identificar indícios de irregularidades muito antes de uma auditoria tradicional seria capaz de fazer.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">💰</div>
+        <div class="card-title">Otimização da Arrecadação Tributária</div>
+        <div class="card-desc">Identificação de contribuintes inadimplentes e inconsistências fiscais.</div>
+        <div class="card-expand">Cruzamento inteligente de declarações fiscais, movimentações financeiras e patrimônio declarado permite identificar inconsistências e oportunidades de recuperação de receita sem aumentar a carga tributária sobre os contribuintes regulares.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+  <div id="exec-comuni" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Comunicação</span>A inteligência artificial pode auxiliar <strong>assessorias de comunicação</strong> na produção de conteúdos institucionais, campanhas educativas, relatórios, discursos e materiais informativos.</p>
+      <p style="margin-top:14px"><strong>Importante:</strong> o uso correto exige <strong>revisão humana</strong> para garantir precisão, legalidade e adequação institucional. A IA é uma ferramenta de produtividade, não de substituição do julgamento profissional.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">✍️</div>
+        <div class="card-title">Produção de Conteúdo Institucional</div>
+        <div class="card-desc">Apoio na elaboração de notas, relatórios e comunicados oficiais.</div>
+        <div class="card-expand">A IA acelera a produção de rascunhos, sugere estruturas adequadas para diferentes formatos e verifica consistência de informações — sempre com revisão humana final para garantir precisão jurídica e adequação ao tom institucional.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">📣</div>
+        <div class="card-title">Campanhas Educativas e de Utilidade Pública</div>
+        <div class="card-desc">Conteúdos adaptados a diferentes públicos e canais.</div>
+        <div class="card-expand">Ferramentas de IA permitem criar variações de uma mesma mensagem para diferentes perfis de público, adaptando linguagem, formato e canal — garantindo que informações importantes cheguem a toda a população de forma acessível e eficaz.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+  <div id="exec-urban" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Urbanismo</span>A IA também pode contribuir com <strong>mobilidade urbana, coleta de resíduos, iluminação pública e planejamento territorial</strong>.</p>
+      <p style="margin-top:14px">Análise de <strong>fluxo urbano</strong> para otimização de transporte público e manutenção de vias — tornando as cidades mais inteligentes, eficientes e sustentáveis.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🚌</div>
+        <div class="card-title">Mobilidade e Transporte Público</div>
+        <div class="card-desc">Otimização de rotas, horários e capacidade de frota.</div>
+        <div class="card-expand">Análise de dados de uso, horários de pico e padrões de deslocamento permite ajustar rotas, frequências e capacidade do transporte público em tempo real, reduzindo lotação, tempo de espera e emissões de carbono.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🏙️</div>
+        <div class="card-title">Planejamento Territorial Inteligente</div>
+        <div class="card-desc">Dados para decisões urbanísticas mais acertadas.</div>
+        <div class="card-expand">Modelos preditivos auxiliam no planejamento de expansão urbana, identificação de áreas de risco, priorização de infraestrutura e avaliação de impacto de obras — tornando a cidade mais eficiente e equitativa.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 06 · LEGISLATIVO ══ -->
+<section id="sec-legis" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">06 · Poder Legislativo</div>
+    <h2 class="sec-title">Inteligência Artificial no <span>Poder Legislativo</span></h2>
+    <p class="sec-lead">Como câmaras municipais, assembleias legislativas e o Congresso Nacional podem utilizar IA como ferramenta de apoio técnico e administrativo.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('legis','prod')">Produção Legislativa</button>
+    <button class="tab-btn" onclick="switchTab('legis','org')">Organização de Informações</button>
+    <button class="tab-btn" onclick="switchTab('legis','transp')">Transparência Pública</button>
+    <button class="tab-btn" onclick="switchTab('legis','comleg')">Comunicação Parlamentar</button>
+    <button class="tab-btn" onclick="switchTab('legis','fisc')">Fiscalização do Executivo</button>
+    <button class="tab-btn" onclick="switchTab('legis','pop')">Participação Popular</button>
+  </div>
+  <div id="legis-prod" class="tab-panel active">
+    <div class="text-block">
+      <p><span class="badge-inline">Legislação</span>A IA pode auxiliar na <strong>estruturação inicial de projetos de lei, pareceres, indicações, requerimentos e estudos técnicos</strong>.</p>
+      <p style="margin-top:14px"><strong>Importante:</strong> a tecnologia não substitui o conhecimento jurídico nem a análise política do parlamentar ou da assessoria técnica. Ela funciona como <strong>suporte de produtividade</strong>, acelerando a elaboração de rascunhos e a verificação de consistência legislativa.</p>
+    </div>
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">Elaboração de Projetos de Lei <span class="acc-arrow">▼</span></button>
+        <div class="acc-body">A IA sugere estruturas legislativas adequadas, verifica consistência com a legislação vigente, identifica possíveis inconstitucionalidades e propõe redações mais claras — sempre com revisão final do jurista ou assessor parlamentar responsável.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">Pesquisa Legislativa Comparada <span class="acc-arrow">▼</span></button>
+        <div class="acc-body">Ferramentas de busca semântica permitem encontrar rapidamente legislações similares em outros municípios, estados ou países — subsidiando parlamentares com precedentes e referências relevantes para cada tema em debate.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">Pareceres e Estudos Técnicos <span class="acc-arrow">▼</span></button>
+        <div class="acc-body">A IA pode sintetizar informações técnicas complexas, consolidar dados de diferentes fontes e estruturar pareceres iniciais — reduzindo o tempo necessário para que assessores técnicos produzam análises aprofundadas sobre cada proposição.</div>
+      </div>
+    </div>
+  </div>
+  <div id="legis-org" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Organização</span>Gabinetes legislativos lidam diariamente com <strong>grande volume de documentos, demandas populares e legislações</strong>.</p>
+      <p style="margin-top:14px">A inteligência artificial pode <strong>organizar informações, resumir documentos e acelerar pesquisas legislativas</strong>, liberando assessores para trabalhos analíticos de maior complexidade.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">📂</div>
+        <div class="card-title">Gestão Documental Inteligente</div>
+        <div class="card-desc">Classificação automática e recuperação rápida de documentos.</div>
+        <div class="card-expand">Sistemas de IA classificam automaticamente documentos recebidos, identificam temas, criam tags e facilitam a recuperação rápida de qualquer documento — mesmo em acervos com décadas de histórico legislativo.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">📝</div>
+        <div class="card-title">Sumarização de Documentos</div>
+        <div class="card-desc">Resumos executivos gerados automaticamente.</div>
+        <div class="card-expand">A IA produz resumos estruturados de pareceres, relatórios de comissões, atas de reuniões e proposições — permitindo que parlamentares se preparem para votações com muito mais eficiência e profundidade.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+  <div id="legis-transp" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Transparência</span>Ferramentas inteligentes podem <strong>facilitar o acesso do cidadão às atividades parlamentares</strong>, tornando o Legislativo mais próximo e compreensível para a população.</p>
+      <p style="margin-top:14px">Sistemas capazes de <strong>resumir sessões legislativas em linguagem acessível</strong> à população — transformando tecnicismos jurídicos em informação cidadã clara e objetiva.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">📺</div>
+        <div class="card-title">Resumo de Sessões em Linguagem Cidadã</div>
+        <div class="card-desc">Tradução automática de debates técnicos para o cidadão comum.</div>
+        <div class="card-expand">Após cada sessão legislativa, a IA pode gerar um resumo acessível descrevendo as principais votações, os temas debatidos e o impacto prático para a população — publicado automaticamente nos canais digitais do parlamento.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🔓</div>
+        <div class="card-title">Portais de Transparência Inteligentes</div>
+        <div class="card-desc">Dados legislativos acessíveis e organizados para todos.</div>
+        <div class="card-expand">Portais com busca semântica, filtros inteligentes e visualizações de dados permitem que qualquer cidadão acompanhe a atuação parlamentar, as votações e a destinação de emendas de forma simples e intuitiva.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+  <div id="legis-comleg" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Comunicação</span>A IA pode apoiar <strong>equipes de comunicação na elaboração de conteúdos para redes sociais, discursos, notas oficiais, informativos e campanhas de utilidade pública</strong>.</p>
+      <p style="margin-top:14px">O uso correto <strong>evita desinformação e fortalece a relação</strong> entre parlamento e sociedade — sempre com supervisão humana e revisão editorial responsável.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">Conteúdo para Redes Sociais</div>
+        <div class="card-desc">Produção ágil de posts e conteúdos digitais institucionais.</div>
+        <div class="card-expand">A IA sugere formatos, adapta linguagem e cria variações de conteúdo para diferentes plataformas — com revisão editorial obrigatória para garantir precisão, coerência institucional e cumprimento das normas de comunicação pública.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🎤</div>
+        <div class="card-title">Apoio à Elaboração de Discursos</div>
+        <div class="card-desc">Estruturação e pesquisa para pronunciamentos parlamentares.</div>
+        <div class="card-expand">Ferramentas de IA auxiliam na pesquisa de dados, estruturação de argumentos e sugestão de referências para discursos — sempre com elaboração final pelo parlamentar ou seu assessor, garantindo autenticidade e responsabilidade política.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+  <div id="legis-fisc" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Fiscalização</span>Uma das funções mais importantes do Legislativo é <strong>fiscalizar o Executivo</strong>. A inteligência artificial pode ampliar significativamente essa capacidade.</p>
+      <p style="margin-top:14px">Ferramentas de análise de dados podem <strong>identificar inconsistências em contratos públicos, despesas e execução orçamentária</strong> — fortalecendo o controle democrático sobre a gestão pública.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🔬</div>
+        <div class="card-title">Análise de Contratos e Licitações</div>
+        <div class="card-desc">Detecção automatizada de anomalias em processos licitatórios.</div>
+        <div class="card-expand">Algoritmos de análise documental cruzam dados de contratos, preços de mercado, histórico de fornecedores e padrões de comportamento para sinalizar possíveis irregularidades ao corpo técnico das comissões de fiscalização.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Monitoramento da Execução Orçamentária</div>
+        <div class="card-desc">Acompanhamento em tempo real das despesas públicas.</div>
+        <div class="card-expand">Painéis inteligentes permitem monitorar a execução do orçamento em tempo real, identificar desvios entre o previsto e o realizado e gerar alertas automáticos para os parlamentares responsáveis pela fiscalização.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+  <div id="legis-pop" class="tab-panel">
+    <div class="text-block">
+      <p><span class="badge-inline">Participação</span>A IA também pode fortalecer mecanismos de <strong>democracia participativa</strong>, aproximando o parlamento das demandas reais da sociedade.</p>
+      <p style="margin-top:14px">Plataformas inteligentes capazes de <strong>organizar demandas populares e identificar prioridades recorrentes</strong> da população — transformando a voz do cidadão em insumo concreto para a atividade legislativa.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🗳️</div>
+        <div class="card-title">Análise de Demandas Populares</div>
+        <div class="card-desc">Identificação de prioridades recorrentes da população.</div>
+        <div class="card-expand">Ferramentas de processamento de linguagem natural analisam mensagens, petições e manifestações recebidas pelo parlamento, identificando os temas mais recorrentes e urgentes para a população — subsidiando a agenda legislativa com dados concretos da realidade social.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+      <div class="feature-card" onclick="toggleCard(this)">
+        <div class="card-icon">🤝</div>
+        <div class="card-title">Plataformas de Consulta Pública</div>
+        <div class="card-desc">Engajamento cidadão em processos legislativos.</div>
+        <div class="card-expand">Sistemas inteligentes facilitam a realização de consultas públicas sobre projetos de lei, sintetizando automaticamente as contribuições recebidas e entregando ao parlamentar uma análise estruturada da opinião da sociedade.</div>
+        <div class="card-arrow">▼</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 07 · RISCOS ══ -->
+<section id="sec-risks" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">07 · Riscos</div>
+    <h2 class="sec-title">Riscos do <span>Uso Irresponsável</span> da Inteligência Artificial</h2>
+    <p class="sec-lead">Apesar dos inúmeros benefícios, o uso irresponsável da IA pode causar sérios danos institucionais, jurídicos e sociais.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="text-block reveal" style="border-color: rgba(220,50,50,0.2); background: rgba(220,50,50,0.04)">
+    <p>Apesar dos inúmeros benefícios, o uso irresponsável da IA pode causar <strong>sérios danos institucionais</strong>. Além dos riscos listados abaixo, existe o risco da <strong>superficialização da gestão pública</strong>: a inteligência artificial não substitui experiência administrativa, sensibilidade política, responsabilidade institucional e compromisso humano.</p>
+    <p style="margin-top:12px">Governar exige <strong>visão estratégica, conhecimento técnico e responsabilidade social</strong> — atributos exclusivamente humanos.</p>
+  </div>
+  <div class="risk-grid reveal">
+    <div class="risk-card">
+      <div class="risk-icon">⚠️</div>
+      <div class="risk-title">Desinformação</div>
+      <div class="risk-desc">IA pode gerar ou amplificar informações falsas quando usada sem critério de verificação e supervisão humana qualificada.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-icon">⚖️</div>
+      <div class="risk-title">Textos Juridicamente Incorretos</div>
+      <div class="risk-desc">Produção de documentos com erros legais graves quando utilizada sem revisão técnica especializada em direito público.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-icon">🔒</div>
+      <div class="risk-title">Violação de Privacidade</div>
+      <div class="risk-desc">Uso inadequado de dados sensíveis de cidadãos em desconformidade com a LGPD e os princípios constitucionais.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-icon">🤖</div>
+      <div class="risk-title">Dependência Excessiva</div>
+      <div class="risk-desc">Substituição indevida da análise humana por automações, reduzindo a capacidade crítica e estratégica das equipes públicas.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-icon">🎭</div>
+      <div class="risk-title">Manipulação Política</div>
+      <div class="risk-desc">Uso de IA para produzir conteúdos enviesados, desinformar o eleitorado ou distorcer análises em favor de interesses específicos.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-icon">👁️</div>
+      <div class="risk-title">Falta de Transparência</div>
+      <div class="risk-desc">Uso oculto de IA em decisões públicas sem informar o cidadão sobre o papel da automação nos processos decisórios.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-icon">📵</div>
+      <div class="risk-title">Exclusão Digital</div>
+      <div class="risk-desc">Adoção de ferramentas que excluem parcelas da população sem acesso ou letramento digital, aprofundando desigualdades.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-icon">🚫</div>
+      <div class="risk-title">Decisões Sem Análise Humana</div>
+      <div class="risk-desc">Automatização de decisões sensíveis sem revisão humana qualificada, expondo o poder público a erros graves e responsabilização jurídica.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 08 · GOVERNANÇA ══ -->
+<section id="sec-gov" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">08 · Governança</div>
+    <h2 class="sec-title">Governança e <span>Regulamentação</span> da IA Pública</h2>
+    <p class="sec-lead">O avanço da IA exige regulamentação clara e políticas de governança tecnológica alinhadas aos princípios constitucionais.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="text-block reveal">
+    <p>O avanço da inteligência artificial exige <strong>regulamentação clara e políticas de governança tecnológica</strong>. A utilização consciente da IA precisa caminhar junto com princípios constitucionais como <strong>legalidade, impessoalidade, moralidade, publicidade e eficiência</strong>.</p>
+  </div>
+  <div class="gov-grid reveal">
+    <div class="gov-card">
+      <div class="gov-card-title">📋 Protocolos de Uso</div>
+      <div class="gov-card-desc">Definição clara de como, quando e para quais finalidades a IA pode ser utilizada em cada área da administração pública, com aprovação institucional e documentação formal dos processos.</div>
+    </div>
+    <div class="gov-card">
+      <div class="gov-card-title">⚖️ Diretrizes Éticas</div>
+      <div class="gov-card-desc">Normas que garantam que o uso da IA respeite direitos fundamentais, princípios de não-discriminação e os valores da administração pública democrática.</div>
+    </div>
+    <div class="gov-card">
+      <div class="gov-card-title">🛡️ Proteção de Dados</div>
+      <div class="gov-card-desc">Políticas rigorosas de segurança da informação em conformidade com a LGPD, incluindo minimização de dados, controle de acesso e mecanismos de resposta a incidentes.</div>
+    </div>
+    <div class="gov-card">
+      <div class="gov-card-title">👤 Revisão Humana Obrigatória</div>
+      <div class="gov-card-desc">Normas que determinem quais tipos de decisões exigem obrigatoriamente revisão humana qualificada antes da implementação, especialmente em matérias que afetam direitos de cidadãos.</div>
+    </div>
+    <div class="gov-card">
+      <div class="gov-card-title">🎓 Capacitação Contínua</div>
+      <div class="gov-card-desc">Programas permanentes de formação e atualização de servidores, gestores e assessores sobre o uso correto, os limites e as potencialidades da inteligência artificial no setor público.</div>
+    </div>
+    <div class="gov-card">
+      <div class="gov-card-title">🏛️ Responsabilidade Institucional</div>
+      <div class="gov-card-desc">Critérios claros de responsabilização dos órgãos e gestores pelo uso adequado da IA, incluindo mecanismos de auditoria, prestação de contas e reparação de eventuais danos causados por uso inadequado.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 09 · PROFISSIONAL ══ -->
+<section id="sec-pro" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">09 · Profissional Público</div>
+    <h2 class="sec-title">O Papel do <span>Profissional Público</span> na Era da IA</h2>
+    <p class="sec-lead">A ascensão da IA aumenta — não reduz — a necessidade de profissionais preparados, estratégicos e capazes de interpretar informações com responsabilidade.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="text-block reveal">
+    <p>A ascensão da inteligência artificial <strong>não reduz a importância do servidor público, do assessor ou do gestor</strong>. Pelo contrário: aumenta a necessidade de profissionais preparados, estratégicos e capazes de interpretar informações com responsabilidade.</p>
+    <p style="margin-top:12px"><strong>O verdadeiro diferencial não será apenas ter acesso à inteligência artificial, mas saber utilizá-la corretamente.</strong></p>
+  </div>
+  <div class="cards-grid reveal">
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">🧠</div>
+      <div class="card-title">Conhecimento Técnico</div>
+      <div class="card-desc">Compreensão dos limites e potencialidades da IA.</div>
+      <div class="card-expand">O profissional público do futuro precisa entender como funcionam os sistemas de IA — não necessariamente como programador, mas como usuário crítico capaz de identificar quando uma ferramenta está sendo bem ou mal aplicada, e quais resultados são confiáveis.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">♟️</div>
+      <div class="card-title">Inteligência Estratégica</div>
+      <div class="card-desc">Capacidade de usar dados e análises com visão de futuro.</div>
+      <div class="card-expand">Mais do que executar tarefas, o profissional público deve ser capaz de interpretar análises produzidas pela IA, identificar oportunidades estratégicas e traduzir dados complexos em políticas e ações concretas de impacto social.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">📡</div>
+      <div class="card-title">Comunicação Institucional</div>
+      <div class="card-desc">Clareza, precisão e adequação na comunicação pública.</div>
+      <div class="card-expand">A capacidade de comunicar bem — com precisão, clareza e adequação ao público — é um diferencial humano que a IA não substitui. O profissional que domina a comunicação institucional e ainda usa a IA como ferramenta multiplica seu impacto.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">🔭</div>
+      <div class="card-title">Capacidade Analítica</div>
+      <div class="card-desc">Leitura crítica de dados e interpretação de cenários.</div>
+      <div class="card-expand">A IA produz dados; o profissional qualificado os interpreta. A capacidade de questionar resultados, identificar vieses, contextualizá-los politicamente e traduzi-los em decisões responsáveis é exclusivamente humana e cada vez mais valorizada.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">⚖️</div>
+      <div class="card-title">Responsabilidade Ética</div>
+      <div class="card-desc">Compromisso com o interesse público acima de tudo.</div>
+      <div class="card-expand">O servidor público tem obrigação constitucional de agir com legalidade, impessoalidade, moralidade e eficiência. No uso da IA, isso significa garantir que a tecnologia sirva ao interesse público — e não a interesses particulares, políticos ou corporativos.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+    <div class="feature-card" onclick="toggleCard(this)">
+      <div class="card-icon">💙</div>
+      <div class="card-title">Sensibilidade Humana</div>
+      <div class="card-desc">O elemento insubstituível da gestão pública.</div>
+      <div class="card-expand">A gestão pública lida com pessoas reais, vulnerabilidades sociais e direitos fundamentais. A sensibilidade para compreender realidades complexas, ouvir o cidadão e tomar decisões que considerem o impacto humano é um atributo que nenhum algoritmo pode substituir.</div>
+      <div class="card-arrow">▼</div>
+    </div>
+  </div>
+  <div class="quote-block reveal" style="margin-top:32px">
+    <p class="quote-text">A tecnologia deve servir ao interesse público, e não substituir a essência humana da administração pública.</p>
+    <div class="quote-author">— Guilherme Doelle</div>
+  </div>
+</section>
+
+<!-- ══ 10 · CONCLUSÃO ══ -->
+<section id="sec-conc" class="section">
+  <div class="sec-header">
+    <div class="sec-tag">10 · Conclusão</div>
+    <h2 class="sec-title">O Futuro da <span>Gestão Pública Inteligente</span></h2>
+    <p class="sec-lead">A inteligência artificial representa uma das maiores transformações da história contemporânea da gestão pública.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="text-block reveal">
+    <p>A inteligência artificial representa uma das maiores transformações da história contemporânea da gestão pública. Seu potencial para <strong>modernizar governos, otimizar processos e fortalecer a eficiência institucional</strong> é gigantesco.</p>
+    <p style="margin-top:12px">No entanto, seu verdadeiro valor depende diretamente da forma como será utilizada. O uso correto da inteligência artificial exige <strong>responsabilidade, ética, supervisão humana, capacitação técnica e compromisso com o interesse público</strong>.</p>
+  </div>
+  <div class="text-block reveal">
+    <p>Tanto no Poder Executivo quanto no Poder Legislativo, a IA pode <strong>ampliar eficiência, fortalecer a transparência, melhorar a comunicação institucional e contribuir para políticas públicas mais inteligentes e assertivas</strong>.</p>
+    <p style="margin-top:12px">Porém, nenhuma tecnologia substitui princípios fundamentais como <strong>sensibilidade humana, responsabilidade política, experiência administrativa e compromisso social</strong>.</p>
+  </div>
+  <div class="conclusion-highlight reveal">
+    <div class="main-quote">
+      "A inteligência artificial deve ser compreendida como uma <em>ferramenta de apoio à gestão pública moderna</em> — nunca como substituta da inteligência humana."
+    </div>
+    <div style="font-size:0.82rem;color:var(--gray-400)">— Guilherme Doelle · Especialista em Comunicação Institucional</div>
+  </div>
+  <div class="text-block reveal">
+    <p>O futuro da administração pública será cada vez mais tecnológico, mas sua <strong>legitimidade continuará dependendo da capacidade humana</strong> de governar com responsabilidade, ética e visão de futuro.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:24px" class="reveal">
+    <div style="background:rgba(24,119,242,0.08);border:1px solid rgba(24,119,242,0.18);border-radius:var(--radius);padding:22px;text-align:center">
+      <div style="font-size:1.8rem;margin-bottom:8px">⚡</div>
+      <div style="font-family:var(--font-display);font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:6px">Eficiência</div>
+      <div style="font-size:0.75rem;color:var(--gray-400)">Processos mais ágeis e resultados melhores</div>
+    </div>
+    <div style="background:rgba(24,119,242,0.08);border:1px solid rgba(24,119,242,0.18);border-radius:var(--radius);padding:22px;text-align:center">
+      <div style="font-size:1.8rem;margin-bottom:8px">🔍</div>
+      <div style="font-family:var(--font-display);font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:6px">Transparência</div>
+      <div style="font-size:0.75rem;color:var(--gray-400)">Dados acessíveis e prestação de contas</div>
+    </div>
+    <div style="background:rgba(24,119,242,0.08);border:1px solid rgba(24,119,242,0.18);border-radius:var(--radius);padding:22px;text-align:center">
+      <div style="font-size:1.8rem;margin-bottom:8px">⚖️</div>
+      <div style="font-family:var(--font-display);font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:6px">Ética</div>
+      <div style="font-size:0.75rem;color:var(--gray-400)">Responsabilidade e compromisso público</div>
+    </div>
+    <div style="background:rgba(24,119,242,0.08);border:1px solid rgba(24,119,242,0.18);border-radius:var(--radius);padding:22px;text-align:center">
+      <div style="font-size:1.8rem;margin-bottom:8px">💙</div>
+      <div style="font-family:var(--font-display);font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:6px">Humanidade</div>
+      <div style="font-size:0.75rem;color:var(--gray-400)">A essência insubstituível da gestão pública</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-logo-row">
+    <div class="footer-badge">🏛️</div>
+    <div>
+      <div class="footer-name">Guilherme Doelle</div>
+      <div class="footer-role">Especialista em Comunicação Institucional</div>
+    </div>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-topic">A Importância do Uso Correto da Inteligência Artificial na Gestão Pública</div>
+  <div class="footer-copy">Conteúdo de natureza educativa e institucional · Transformação Digital · Governança Pública</div>
+</footer>
+
+</main>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="backToTop()" aria-label="Voltar ao topo">↑</button>
+
+<script>
+// ── STATE ──
+const sections = ['hero','intro','what','modern','correct','exec','legis','risks','gov','pro','conc'];
+let currentSec = 'hero';
+
+// ── NAVIGATION ──
+function goTo(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sec = document.getElementById('sec-' + id);
+  const nav = document.querySelector('[data-sec="' + id + '"]');
+  if (sec) { sec.classList.add('active'); currentSec = id; }
+  if (nav) nav.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  // trigger reveal animations
+  setTimeout(() => triggerReveal(), 100);
+  closeSidebar();
+}
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => goTo(item.dataset.sec));
+});
+
+function openTopicsMenu() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('overlay').classList.add('visible');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('visible');
+}
+
+document.getElementById('menu-toggle').addEventListener('click', () => {
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (sb.classList.contains('open')) { closeSidebar(); } else { sb.classList.add('open'); ov.classList.add('visible'); }
+});
+document.getElementById('overlay').addEventListener('click', closeSidebar);
+
+// ── PROGRESS BAR ──
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('main');
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  const bt = document.getElementById('back-top');
+  window.scrollY > 300 ? bt.classList.add('visible') : bt.classList.remove('visible');
+  triggerReveal();
+});
+
+function backToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+
+// ── REVEAL ON SCROLL ──
+function triggerReveal() {
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 60) el.classList.add('visible');
+  });
+}
+setTimeout(triggerReveal, 200);
+
+// ── CARDS ──
+function toggleCard(card) {
+  card.classList.toggle('expanded');
+}
+
+// ── PILLARS ──
+function togglePillar(card) {
+  card.classList.toggle('open');
+}
+
+// ── ACCORDION ──
+function toggleAcc(btn) {
+  btn.classList.toggle('open');
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ── TABS ──
+function switchTab(group, tab) {
+  const section = document.getElementById('sec-' + group);
+  section.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(group + '-' + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── SEARCH ──
+const searchData = [
+  { label: 'Introdução', id: 'intro', desc: 'Transformação digital e necessidade imediata' },
+  { label: 'O que é IA na Gestão Pública', id: 'what', desc: 'Definição e aplicações gerais' },
+  { label: 'Modernização do Estado', id: 'modern', desc: 'Como a IA transforma a administração pública' },
+  { label: 'Supervisão Humana', id: 'correct', desc: 'Pilares do uso correto da IA' },
+  { label: 'Ética e Transparência', id: 'correct', desc: '5 pilares fundamentais' },
+  { label: 'Segurança da Informação', id: 'correct', desc: 'LGPD e proteção de dados' },
+  { label: 'Capacitação Técnica', id: 'correct', desc: 'Formação de servidores e gestores' },
+  { label: 'Uso Estratégico', id: 'correct', desc: 'Além das tarefas operacionais' },
+  { label: 'Atendimento ao Cidadão', id: 'exec', desc: 'Chatbots e assistentes virtuais' },
+  { label: 'Saúde Pública', id: 'exec', desc: 'IA na gestão de saúde' },
+  { label: 'Educação Pública', id: 'exec', desc: 'Evasão escolar e desempenho' },
+  { label: 'Gestão Financeira e Tributária', id: 'exec', desc: 'Detecção de fraudes' },
+  { label: 'Planejamento Urbano', id: 'exec', desc: 'Mobilidade e cidades inteligentes' },
+  { label: 'Produção Legislativa', id: 'legis', desc: 'Projetos de lei e pareceres' },
+  { label: 'Fiscalização do Executivo', id: 'legis', desc: 'Controle e auditoria' },
+  { label: 'Participação Popular', id: 'legis', desc: 'Democracia participativa' },
+  { label: 'Riscos do Uso Irresponsável', id: 'risks', desc: 'Desinformação, fraudes e riscos' },
+  { label: 'Governança e Regulamentação', id: 'gov', desc: 'Protocolos, LGPD e diretrizes' },
+  { label: 'Profissional Público', id: 'pro', desc: 'Competências na era da IA' },
+  { label: 'Conclusão', id: 'conc', desc: 'Síntese e mensagem central' },
+];
+
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.toLowerCase().trim();
+  if (!q) { searchResults.style.display = 'none'; return; }
+  const filtered = searchData.filter(d => d.label.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q));
+  if (!filtered.length) { searchResults.style.display = 'none'; return; }
+  searchResults.innerHTML = filtered.slice(0, 6).map(d =>
+    `<div class="search-result-item" onclick="goTo('${d.id}');searchInput.value='';searchResults.style.display='none'">
+      <span>${d.label}</span> · <span style="color:var(--gray-600)">${d.desc}</span>
+    </div>`
+  ).join('');
+  searchResults.style.display = 'block';
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('#search-bar')) searchResults.style.display = 'none';
+});
+
+// ── KEYBOARD NAV ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeSidebar(); searchResults.style.display = 'none'; }
+});
+
+// ── INIT ──
+triggerReveal();
+</script>
+</body>
+</html>
